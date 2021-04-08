@@ -1,0 +1,20 @@
+<server description="new server">
+
+	<featureManager>
+		<feature>jsp-2.3</feature>
+		<feature>servlet-4.0</feature>
+		<feature>jaxrs-2.1</feature>
+		<feature>jsonp-1.1</feature>
+		<feature>cdi-2.0</feature>
+		<feature>mpMetrics-2.0</feature>
+		<feature>mpConfig-1.3</feature>
+	</featureManager>
+
+	<httpEndpoint httpPort="9080" id="defaultHttpEndpoint" host="*"/>
+
+	<webApplication location="liberty-war-example.war" contextRoot="/"/>
+
+	<mpMetrics authentication="false"/>
+	<logging traceSpecification="com.ibm.ws.microprofile.health.*=all" />
+
+</server>

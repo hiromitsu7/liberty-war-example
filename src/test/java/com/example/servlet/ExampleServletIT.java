@@ -20,7 +20,7 @@ public class ExampleServletIT {
     public void testDoGet() {
         String hostname = System.getProperty("liberty.hostname", "localhost");
         String port = System.getProperty("liberty.http.port", "9080");
-        String url = "http://" + hostname + ":" + port + "/";
+        String url = "http://" + hostname + ":" + port + "/liberty-war-example/";
 
         // デフォルト設定でHttpClientインスタンスを作成
         HttpClient client = HttpClient.newHttpClient();

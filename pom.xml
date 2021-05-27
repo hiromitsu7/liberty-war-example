@@ -18,17 +18,9 @@
     <dependency>
       <groupId>jakarta.platform</groupId>
       <artifactId>jakarta.jakartaee-api</artifactId>
-      <version>8.0.0</version>
+      <version>9.1.0</version>
       <scope>provided</scope>
     </dependency>
-    <dependency>
-      <groupId>org.eclipse.microprofile</groupId>
-      <artifactId>microprofile</artifactId>
-      <version>3.3</version>
-      <type>pom</type>
-      <scope>provided</scope>
-    </dependency>
-
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
@@ -39,41 +31,6 @@
       <artifactId>logback-classic</artifactId>
       <version>1.2.3</version>
     </dependency>
-
-
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.13.2</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.cxf</groupId>
-      <artifactId>cxf-rt-rs-client</artifactId>
-      <version>3.4.3</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.cxf</groupId>
-      <artifactId>cxf-rt-rs-extension-providers</artifactId>
-      <version>3.4.3</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.glassfish</groupId>
-      <artifactId>javax.json</artifactId>
-      <version>1.1.4</version>
-      <scope>test</scope>
-    </dependency>
-    <!-- Support for JDK 9 and above -->
-    <dependency>
-      <groupId>javax.xml.bind</groupId>
-      <artifactId>jaxb-api</artifactId>
-      <version>2.3.1</version>
-      <scope>test</scope>
-    </dependency>
-
-
   </dependencies>
 
   <build>
@@ -142,9 +99,9 @@
         <version>3.3.4</version>
         <configuration>
           <runtimeArtifact>
-            <groupId>com.ibm.websphere.appserver.runtime</groupId>
-            <artifactId>wlp-javaee8</artifactId>
-            <version>21.0.0.3</version>
+            <groupId>io.openliberty.beta</groupId>
+            <artifactId>openliberty-jakartaee9</artifactId>
+            <version>21.0.0.6-beta</version>
           </runtimeArtifact>
         </configuration>
       </plugin>

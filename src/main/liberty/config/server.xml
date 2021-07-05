@@ -12,13 +12,16 @@
 		<feature>mpConfig-2.0</feature>
 		<feature>monitor-1.0</feature>
 		<feature>jsp-2.3</feature>
+		<feature>transportSecurity-1.0</feature>
 	</featureManager>
 
-	<httpEndpoint httpPort="9080" id="defaultHttpEndpoint" host="*"/>
+	<httpEndpoint httpPort="9080" httpsPort="9443" id="defaultHttpEndpoint" host="*"/>
+	<keyStore id="defaultKeyStore" password="yourPassword"/>
 
 	<mpMetrics authentication="false"/>
 	<logging traceSpecification="com.ibm.ws.microprofile.health.*=all" />
 
+	<!--JDBC-->
 	<jdbcDriver id="db2" libraryRef="db2Lib"/>
 
 	<library id="db2Lib">
@@ -29,8 +32,8 @@
 		<properties.db2.jcc databaseName="SAMPLE" serverName="192.168.99.105" portNumber="50000" user="db2inst1" password="passw0rd"/>
 	</dataSource>
 
+	<!--JMS-->
 	<variable name="wmqJmsClient.rar.location" value="${server.config.dir}/wmq.jmsra.rar"/>
-
 
 	<jmsActivationSpec id="liberty-war-example/QueueMDB">
 		<properties.wmqJms channel="DEV.APP.SVRCONN" destinationRef="jms/queue1" transportType="CLIENT" queueManager="QM1" hostName="192.168.99.105" port="1414"/>

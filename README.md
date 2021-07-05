@@ -13,6 +13,25 @@ https://github.com/OpenLiberty/demo-devmode
 mvn liberty:dev
 ```
 
+## HTTPS
+
+```bash
+# キーストアの内容を表示する
+keytool -v -list -keystore target/liberty/wlp/usr/servers/defaultServer/resources/security/key.p12 -storetype pkcs12
+# 秘密鍵を取り出す(キーストアのパスワードはserver.xmlに記載しているもの)
+openssl pkcs12 -in target/liberty/wlp/usr/servers/defaultServer/resources/security/key.p12 -nocerts -nodes -out privatekey
+# 証明書署名要求(default.csr)を作成する
+openssl req -new -key privatekey -subj "/CN=myhost.example.com/OU=defaultServer/O=ibm/ST=Tokyo/C=JP" -out default.csr
+# SAN(Subject Alternative Name)を指定するためのファイルを作成する
+echo subjectAltName=DNS:myhost.example.com > default-san.ext
+# 証明書(default.crt)を作成する
+openssl x509 -days 3650 -sha256 -req -signkey privatekey -in default.csr -out default.crt -extfile default-san.ext
+# キーストアに証明書を登録する
+keytool -importcert -alias default -noprompt -trustcacerts -file default.crt -keystore target/liberty/wlp/usr/servers/defaultServer/resources/security/key.p12 -storetype pkcs12
+# キーストアの内容を表示する
+keytool -v -list -keystore target/liberty/wlp/usr/servers/defaultServer/resources/security/key.p12 -storetype pkcs12
+```
+
 ## Db2
 
 ```bash

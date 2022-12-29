@@ -24,6 +24,9 @@ public class ExampleServlet extends HttpServlet {
     super();
   }
 
+  /**
+   * 応答ボディのStreamへの書き出しをWrapperでトレースします。
+   */
   @Override
   @Timed(name = "doGet", description = "ExampleServlet")
   @Counted(absolute = true, description = "ExampleServlet")

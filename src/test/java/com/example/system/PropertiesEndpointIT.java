@@ -1,42 +1,16 @@
 package com.example.system;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.Test;
 
-import javax.json.JsonObject;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.Response;
-
-import org.apache.cxf.jaxrs.provider.jsrjsonp.JsrJsonpProvider;
-import org.junit.Test;
+import io.restassured.RestAssured;
+import org.hamcrest.Matchers;
 
 public class PropertiesEndpointIT {
 
     @Test
     public void testGetProperties() {
-        // system properties
-        String hostname = System.getProperty("liberty.hostname", "localhost");
-        String port = System.getProperty("liberty.http.port", "9080");
-        String url = "http://" + hostname + ":" + port + "/liberty-war-example/";
-
-        // client setup
-        Client client = ClientBuilder.newClient();
-
-        client.register(JsrJsonpProvider.class);
-
-        // request
-        WebTarget target = client.target(url + "system/properties");
-        Response response = target.request().get();
-
-        // response
-        assertEquals("Incorrect response code from " + url, 200, response.getStatus());
-
-        JsonObject obj = response.readEntity(JsonObject.class);
-
-        assertEquals("The system property for the local and remote JVM should match", System.getProperty("os.name"),
-                obj.getString("os.name"));
-
-        response.close();
+        String url = "http://localhost:9080/liberty-war-example/";
+        RestAssured.get(url + "system/properties").then().statusCode(200).assertThat()
+                .body("'java.specification.version'", Matchers.equalTo("17"));
     }
 }

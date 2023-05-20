@@ -16,7 +16,7 @@ mvn liberty:dev
 ## Db2
 
 ```bash
-docker run -itd --rm --name mydb --privileged=true -p 50000:50000 -e LICENSE=accept -e DB2INST1_PASSWORD=passw0rd -e DBNAME=testdb ibmcom/db2
+docker run -itd --rm --name mydb --privileged=true -p 50000:50000 -e LICENSE=accept -e DB2INST1_PASSWORD=passw0rd -e DBNAME=testdb ibmcom/db2:11.5.8.0
 docker exec -it mydb bash
 su - db2inst1
 db2sampl

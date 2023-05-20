@@ -1,64 +1,69 @@
 <server description="new server">
 
 	<featureManager>
-		<feature>cdi-2.0</feature>
-		<feature>servlet-4.0</feature>
-		<feature>jaxrs-2.1</feature>
-		<feature>jdbc-4.3</feature>
-		<feature>jndi-1.0</feature>
-		<feature>mdb-3.2</feature>
-		<feature>wmqJmsClient-2.0</feature>
-		<feature>mpMetrics-3.0</feature>
-		<feature>mpConfig-2.0</feature>
-		<feature>monitor-1.0</feature>
-		<feature>sessionDatabase-1.0</feature>
+		<feature>jakartaee-10.0</feature>
+		<!-- <feature>microProfile-6.0</feature> -->
 	</featureManager>
 
-	<httpEndpoint httpPort="9080" id="defaultHttpEndpoint" host="*"/>
+	<httpEndpoint httpPort="9080" id="defaultHttpEndpoint" host="*" />
 
-	<httpSession invalidationTimeout="1m"/>
-	<httpSessionDatabase id="SessionDB" dataSourceRef="ds" useInvalidatedId="false"/>
+	<httpSession invalidationTimeout="1m" />
+	<!-- <httpSessionDatabase id="SessionDB" dataSourceRef="ds" useInvalidatedId="false"/> -->
 
-	<mpMetrics authentication="false"/>
+	<mpMetrics authentication="false" />
 	<logging traceSpecification="com.ibm.ws.microprofile.health.*=all" />
 
-	<jdbcDriver id="db2" libraryRef="db2Lib"/>
+	<basicRegistry id="basic" realm="customRealm">
+		<user name="mlee" password="p@ssw0rd" />
+		<user name="rkumar" password="pa$$w0rd" />
+		<user name="gjones" password="{xor}Lz4sLCgwLTs=" />
+		<group name="students">
+			<member name="mlee" />
+			<member name="rkumar" />
+		</group>
+	</basicRegistry>
+
+	<jdbcDriver id="db2" libraryRef="db2Lib" />
 
 	<library id="db2Lib">
-		<fileset dir="${server.config.dir}" includes="db2jcc4.jar"/>
+		<fileset dir="${server.config.dir}" includes="db2jcc4.jar" />
 	</library>
 
 	<dataSource id="ds" jndiName="jdbc/SampleDS" jdbcDriverRef="db2">
-		<properties.db2.jcc databaseName="SAMPLE" serverName="192.168.99.107" portNumber="50000" user="db2inst1" password="passw0rd"/>
+		<properties.db2.jcc databaseName="SAMPLE" serverName="localhost" portNumber="50000"
+			user="db2inst1" password="passw0rd" />
 	</dataSource>
 
-	<variable name="wmqJmsClient.rar.location" value="${server.config.dir}/wmq.jmsra.rar"/>
-
+	<variable name="wmqJmsClient.rar.location" value="${server.config.dir}/wmq.jmsra.rar" />
 
 	<jmsActivationSpec id="liberty-war-example/QueueMDB">
-		<properties.wmqJms channel="DEV.APP.SVRCONN" destinationRef="jms/queue1" transportType="CLIENT" queueManager="QM1" hostName="192.168.99.107" port="1414"/>
+		<properties.wmqJms channel="DEV.APP.SVRCONN" destinationRef="jms/queue1"
+			transportType="CLIENT" queueManager="QM1" hostName="192.168.99.107" port="1414" />
 	</jmsActivationSpec>
 
 	<jmsActivationSpec id="liberty-war-example/TopicMDB">
-		<properties.wmqJms channel="DEV.APP.SVRCONN" destinationRef="jms/topic1" transportType="CLIENT" queueManager="QM1" hostName="192.168.99.107" port="1414"/>
+		<properties.wmqJms channel="DEV.APP.SVRCONN" destinationRef="jms/topic1"
+			transportType="CLIENT" queueManager="QM1" hostName="192.168.99.107" port="1414" />
 	</jmsActivationSpec>
 
 	<jmsQueueConnectionFactory id="qcf1" jndiName="jms/qcf1" connectionManagerRef="ConMgr1">
-		<properties.wmqJms channel="DEV.APP.SVRCONN" hostName="192.168.99.107" port="1414" queueManager="QM1" transportType="CLIENT" />
+		<properties.wmqJms channel="DEV.APP.SVRCONN" hostName="192.168.99.107" port="1414"
+			queueManager="QM1" transportType="CLIENT" />
 	</jmsQueueConnectionFactory>
 	<connectionManager id="ConMgr1" maxPoolSize="10" />
 
 	<jmsQueue id="jms/queue1" jndiName="jms/queue1">
-		<properties.wmqJms baseQueueName="DEV.QUEUE.1" baseQueueManagerName="QM1"/>
+		<properties.wmqJms baseQueueName="DEV.QUEUE.1" baseQueueManagerName="QM1" />
 	</jmsQueue>
 
 	<jmsTopicConnectionFactory id="tcf1" jndiName="jms/tcf1" connectionManagerRef="ConMgr2">
-		<properties.wmqJms channel="DEV.APP.SVRCONN" hostName="192.168.99.107" port="1414" queueManager="QM1" transportType="CLIENT" />
+		<properties.wmqJms channel="DEV.APP.SVRCONN" hostName="192.168.99.107" port="1414"
+			queueManager="QM1" transportType="CLIENT" />
 	</jmsTopicConnectionFactory>
 	<connectionManager id="ConMgr2" maxPoolSize="10" />
 
 	<jmsTopic id="jms/topic1" jndiName="jms/topic1">
-		<properties.wmqJms baseTopicName="dev/" brokerPubQueueManager="QM1"/>
+		<properties.wmqJms baseTopicName="dev/" brokerPubQueueManager="QM1" />
 	</jmsTopic>
 
 </server>
